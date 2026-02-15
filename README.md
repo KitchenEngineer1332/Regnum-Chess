@@ -26,7 +26,7 @@ Regnum-Chess/
 |-- README.md
 ```
 
-## Screenshots
+## Screenshots & Clips
 Dark Mode
 ![Dark Mode](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/dark.png) 
 
@@ -34,4 +34,7 @@ Light Mode
 ![Light Mode](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/light.png) 
 
 Theme Selector
-![Theme Selector](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/select-theme.png)
+![Theme Selector](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/select-theme.png) 
+
+Demo Video of Theme Switching
+![Video](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/vids/vid.mp4)
