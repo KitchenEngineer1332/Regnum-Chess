@@ -12,7 +12,7 @@ Regnum Chess is a web-based chess application that provides a premium gaming exp
 * Backend: None (client-side application)
 
 ## Usage
-1. Click on 
+1. Click on https://kitchenengineer1332.github.io/Regnum-Chess/
 2. Click on the "Single Player" or "Multiplayer" button to start a new game
 3. Use the mouse and keyboard to interact with the game board and pieces
 4. Customize the theme and layout options by clicking on the gear icon
