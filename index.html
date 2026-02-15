@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regnum Chess</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Premium serif + geometric sans pairing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════ LOADER ══════════════════════════════════ -->
+  <div id="loader" class="loader">
+    <div class="loader-content">
+      <div class="loader-emblem">♛</div>
+      <div class="loader-wordmark">REGNUM</div>
+      <div class="loader-tagline">The Royal Game</div>
+      <div class="loader-track">
+        <div class="loader-bar" id="loaderBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ BACKGROUND ═══════════════════════════════ -->
+  <canvas id="bgCanvas" class="bg-canvas"></canvas>
+  <div class="bg-gradient-overlay"></div>
+
+  <!-- ═══════════════════════════════════════ LANDING PAGE ════════════════════════════ -->
+  <div id="landing" class="page">
+    <header class="landing-header glass">
+      <div class="logo">
+        <span class="logo-emblem">♛</span>
+        <span class="logo-text">REGNUM</span>
+      </div>
+      <button class="btn-icon" id="themeToggleLanding" title="Toggle theme" aria-label="Toggle theme">
+        <span class="icon-sun">☀</span>
+        <span class="icon-moon">◑</span>
+      </button>
+    </header>
+
+    <main class="landing-main">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Ultimate Chess Experience</p>
+        <h1 class="hero-title">
+          Play the<br/>
+          <em>Royal Game</em>
+        </h1>
+        <p class="hero-subtitle">Beautifully crafted. Deeply strategic.<br/>A chess experience unlike any other.</p>
+
+        <div class="hero-actions">
+          <button class="btn-primary" id="playSingle">
+            <span class="btn-icon-label">♟</span>
+            <span>Single Player</span>
+          </button>
+          <button class="btn-secondary" id="playMulti">
+            <span class="btn-icon-label">⚔</span>
+            <span>Multiplayer</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <!-- Decorative floating board -->
+        <div class="mini-board" id="miniBoard"></div>
+        <div class="board-glow"></div>
+      </div>
+    </main>
+
+    <footer class="landing-footer">
+      <p>Drag, click, or tap to move pieces</p>
+    </footer>
+  </div>
+
+  <!-- ═══════════════════════════════════════ GAME PAGE ═══════════════════════════════ -->
+  <div id="gamePage" class="page">
+
+    <!-- Game Header -->
+    <header class="game-header glass">
+      <button class="btn-back" id="backBtn">
+        <span class="back-arrow">←</span>
+        <span class="back-label">♛ REGNUM</span>
+      </button>
+      <div class="mode-badge" id="modeBadge">vs AI · Hard</div>
+      <div class="header-actions">
+        <button class="btn-icon" id="soundToggle" title="Sound" aria-label="Toggle sound">
+          <span class="icon-sound-on">♪</span>
+          <span class="icon-sound-off">♩</span>
+        </button>
+        <button class="btn-icon" id="settingsBtn" title="Settings" aria-label="Settings">⚙</button>
+        <button class="btn-icon" id="themeToggleGame" title="Theme" aria-label="Toggle theme">◑</button>
+      </div>
+    </header>
+
+    <!-- Game Layout -->
+    <div class="game-layout">
+
+      <!-- ── Left Panel ── -->
+      <aside class="panel panel-left glass">
+
+        <!-- Black player (top in left panel on desktop) -->
+        <div class="captured-section">
+          <div class="captured-label">Captured by White</div>
+          <div class="captured-pieces" id="capturedByWhite"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Move History -->
+        <div class="history-section">
+          <div class="section-title">Move History</div>
+          <div class="move-history" id="moveHistory">
+            <div class="history-placeholder">No moves yet</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="captured-section">
+          <div class="captured-label">Captured by Black</div>
+          <div class="captured-pieces" id="capturedByBlack"></div>
+        </div>
+
+      </aside>
+
+      <!-- ── Board Area ── -->
+      <div class="board-area">
+
+        <!-- Black Player Info -->
+        <div class="player-strip" id="blackStrip">
+          <div class="player-avatar black-avatar">♚</div>
+          <div class="player-meta">
+            <span class="player-name" id="blackName">Black</span>
+            <span class="player-score" id="blackScore">0</span>
+          </div>
+          <div class="spacer"></div>
+          <div class="timer-display" id="blackTimer">—</div>
+          <div class="turn-dot" id="blackDot"></div>
+        </div>
+
+        <!-- Board Wrapper with coordinates -->
+        <div class="board-wrapper">
+          <div class="coord-ranks" id="rankLabels">
+            <span>8</span><span>7</span><span>6</span><span>5</span>
+            <span>4</span><span>3</span><span>2</span><span>1</span>
+          </div>
+          <div class="board-and-files">
+            <div class="chess-board" id="chessboard"></div>
+            <div class="coord-files">
+              <span>a</span><span>b</span><span>c</span><span>d</span>
+              <span>e</span><span>f</span><span>g</span><span>h</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- White Player Info -->
+        <div class="player-strip" id="whiteStrip">
+          <div class="player-avatar white-avatar">♔</div>
+          <div class="player-meta">
+            <span class="player-name" id="whiteName">White</span>
+            <span class="player-score" id="whiteScore">0</span>
+          </div>
+          <div class="spacer"></div>
+          <div class="timer-display" id="whiteTimer">—</div>
+          <div class="turn-dot" id="whiteDot"></div>
+        </div>
+
+      </div>
+
+      <!-- ── Right Panel ── -->
+      <aside class="panel panel-right glass">
+
+        <!-- Status -->
+        <div class="status-display" id="statusDisplay">
+          <div class="status-icon" id="statusIcon">♟</div>
+          <div class="status-text" id="statusText">White's Turn</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Controls -->
+        <div class="controls-section">
+          <button class="btn-control" id="undoBtn" title="Undo last move">
+            <span>↩</span><span>Undo</span>
+          </button>
+          <button class="btn-control" id="flipBtn" title="Flip board">
+            <span>⇅</span><span>Flip</span>
+          </button>
+          <button class="btn-control btn-danger" id="restartBtn" title="Restart game">
+            <span>↺</span><span>Restart</span>
+          </button>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- AI Difficulty (shown in single player mode) -->
+        <div class="difficulty-panel" id="difficultyPanel">
+          <div class="section-title">Difficulty</div>
+          <div class="diff-group">
+            <button class="diff-btn" data-level="easy">Easy</button>
+            <button class="diff-btn" data-level="medium">Medium</button>
+            <button class="diff-btn active" data-level="hard">Hard</button>
+          </div>
+        </div>
+
+        <!-- Timer control (shown in multiplayer) -->
+        <div class="timer-panel" id="timerPanel" style="display:none;">
+          <div class="section-title">Time Control</div>
+          <div class="timer-group">
+            <button class="timer-btn active" data-time="300">Blitz 5m</button>
+            <button class="timer-btn" data-time="600">Rapid 10m</button>
+            <button class="timer-btn" data-time="0">Untimed</button>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ MODALS ══════════════════════════════════ -->
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal glass" role="dialog" aria-label="Settings">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button class="modal-close" data-close="settingsModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-group">
+          <label class="setting-label">Interface Theme</label>
+          <div class="toggle-row">
+            <span>Dark Mode</span>
+            <button class="toggle-btn" id="darkModeToggle">
+              <span class="toggle-thumb"></span>
+            </button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">Board Theme</label>
+          <div class="theme-swatches">
+            <button class="swatch active" data-board="classic" title="Classic">
+              <div class="swatch-preview classic-preview"></div>
+              <span>Classic</span>
+            </button>
+            <button class="swatch" data-board="modern" title="Modern">
+              <div class="swatch-preview modern-preview"></div>
+              <span>Modern</span>
+            </button>
+            <button class="swatch" data-board="glass" title="Glass">
+              <div class="swatch-preview glass-preview"></div>
+              <span>Glass</span>
+            </button>
+            <button class="swatch" data-board="emerald" title="Emerald">
+              <div class="swatch-preview emerald-preview"></div>
+              <span>Emerald</span>
+            </button>
+            <button class="swatch" data-board="ocean" title="Ocean">
+              <div class="swatch-preview ocean-preview"></div>
+              <span>Ocean</span>
+            </button>
+            <button class="swatch" data-board="midnight" title="Midnight">
+              <div class="swatch-preview midnight-preview"></div>
+              <span>Midnight</span>
+            </button>
+            <button class="swatch" data-board="walnut" title="Walnut">
+              <div class="swatch-preview walnut-preview"></div>
+              <span>Walnut</span>
+            </button>
+            <button class="swatch" data-board="rose" title="Rose">
+              <div class="swatch-preview rose-preview"></div>
+              <span>Rose</span>
+            </button>
+            <button class="swatch" data-board="ice" title="Ice">
+              <div class="swatch-preview ice-preview"></div>
+              <span>Ice</span>
+            </button>
+            <button class="swatch" data-board="noir" title="Noir">
+              <div class="swatch-preview noir-preview"></div>
+              <span>Noir</span>
+            </button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">Sound Effects</label>
+          <div class="toggle-row">
+            <span>Enable Sounds</span>
+            <button class="toggle-btn active" id="soundSettingToggle">
+              <span class="toggle-thumb"></span>
+            </button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">Animations</label>
+          <div class="toggle-row">
+            <span>Enable Animations</span>
+            <button class="toggle-btn active" id="animToggle">
+              <span class="toggle-thumb"></span>
+            </button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">Show Coordinates</label>
+          <div class="toggle-row">
+            <span>Board Coordinates</span>
+            <button class="toggle-btn active" id="coordToggle">
+              <span class="toggle-thumb"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over Modal -->
+  <div class="modal-overlay" id="gameoverModal">
+    <div class="modal modal-gameover glass" role="dialog">
+      <div class="gameover-emblem" id="gameoverEmblem">♛</div>
+      <h2 class="gameover-title" id="gameoverTitle">Checkmate!</h2>
+      <p class="gameover-subtitle" id="gameoverSubtitle">White wins the game</p>
+      <div class="gameover-stats" id="gameoverStats">
+        <div class="stat"><span class="stat-val" id="statMoves">0</span><span class="stat-key">Moves</span></div>
+        <div class="stat"><span class="stat-val" id="statTime">0:00</span><span class="stat-key">Time</span></div>
+        <div class="stat"><span class="stat-val" id="statCaptures">0</span><span class="stat-key">Captures</span></div>
+      </div>
+      <div class="gameover-actions">
+        <button class="btn-primary" id="playAgainBtn">Play Again</button>
+        <button class="btn-secondary" id="goHomeBtn">Main Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Modal -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal modal-confirm glass" role="dialog">
+      <h2 class="confirm-title" id="confirmTitle">Restart Game?</h2>
+      <p class="confirm-subtitle" id="confirmSubtitle">Your current game will be lost.</p>
+      <div class="confirm-actions">
+        <button class="btn-primary" id="confirmYes">Confirm</button>
+        <button class="btn-secondary" id="confirmNo">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promotion Modal -->
+  <div class="modal-overlay" id="promotionModal">
+    <div class="modal modal-promotion glass" role="dialog">
+      <h2>Promote Pawn</h2>
+      <p>Choose a piece</p>
+      <div class="promotion-choices" id="promotionChoices"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.12.0/chess.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
