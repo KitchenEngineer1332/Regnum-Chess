@@ -28,4 +28,10 @@ Regnum-Chess/
 
 ## Screenshots
 Dark Mode
-![Dark Mode](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/dark.png)
+![Dark Mode](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/dark.png) 
+
+Light Mode
+![Light Mode](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/light.png) 
+
+Theme Selector
+![Theme Selector](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/select-theme.png)
