@@ -37,4 +37,4 @@ Theme Selector
 ![Theme Selector](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/select-theme.png) 
 
 Demo Video of Theme Switching
-![Video](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/vids/vid.mp4)
+<video src="https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/vids/vid.mp4" controls></video>
