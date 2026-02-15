@@ -27,5 +27,5 @@ Regnum-Chess/
 ```
 
 ## Screenshots
-# Dark Mode
+Dark Mode
 ![Dark Mode](https://github.com/KitchenEngineer1332/Regnum-Chess/blob/main/ss/dark.png)
